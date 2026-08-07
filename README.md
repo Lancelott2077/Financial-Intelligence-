@@ -83,3 +83,15 @@ Copy `.env.example` to `.env` and fill in values before running.
 ---
 
 *Generated scaffold — no business logic implemented yet.*
+
+Backend Requirements
+
+Python: 3.12.x
+
+Node.js: 22.x LTS
+
+Package Manager: npm
+
+Database: SQLite
+
+AI: Gemini API
