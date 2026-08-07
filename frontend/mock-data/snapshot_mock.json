@@ -1,50 +1,98 @@
 {
   "session_id": "c1f7b7f2-6c84-486a-86a0-53bcaf32cda4",
-  "total_income": 4500.0,
-  "total_expenses": 3200.0,
-  "net_savings": 1300.0,
-  "savings_rate": 28.8,
-  "transaction_count": 84,
+  "total_income": 9200.00,
+  "total_expenses": 6540.00,
+  "net_savings": 2660.00,
+  "savings_rate": 28.9,
+  "transaction_count": 156,
   "date_range_start": "2024-01-01",
-  "date_range_end": "2024-03-31",
+  "date_range_end": "2024-06-30",
   "category_breakdown": [
     {
       "category": "food_and_dining",
-      "total": 800.0,
-      "percentage": 25.0,
-      "transaction_count": 22
+      "total": 1640.00,
+      "percentage": 25.1,
+      "transaction_count": 42
+    },
+    {
+      "category": "shopping",
+      "total": 1120.00,
+      "percentage": 17.1,
+      "transaction_count": 18
     },
     {
       "category": "transport",
-      "total": 400.0,
-      "percentage": 12.5,
-      "transaction_count": 14
+      "total": 880.00,
+      "percentage": 13.5,
+      "transaction_count": 28
     },
     {
       "category": "entertainment",
-      "total": 500.0,
-      "percentage": 15.6,
+      "total": 760.00,
+      "percentage": 11.6,
+      "transaction_count": 14
+    },
+    {
+      "category": "utilities",
+      "total": 720.00,
+      "percentage": 11.0,
+      "transaction_count": 12
+    },
+    {
+      "category": "groceries",
+      "total": 680.00,
+      "percentage": 10.4,
+      "transaction_count": 24
+    },
+    {
+      "category": "healthcare",
+      "total": 420.00,
+      "percentage": 6.4,
       "transaction_count": 8
+    },
+    {
+      "category": "education",
+      "total": 320.00,
+      "percentage": 4.9,
+      "transaction_count": 10
     }
   ],
   "monthly_trends": [
     {
       "month": "2024-01",
-      "income": 1500.0,
-      "expenses": 1000.0,
-      "net": 500.0
+      "income": 1500.00,
+      "expenses": 980.00,
+      "net": 520.00
     },
     {
       "month": "2024-02",
-      "income": 1500.0,
-      "expenses": 1100.0,
-      "net": 400.0
+      "income": 1500.00,
+      "expenses": 1050.00,
+      "net": 450.00
     },
     {
       "month": "2024-03",
-      "income": 1500.0,
-      "expenses": 1100.0,
-      "net": 400.0
+      "income": 1550.00,
+      "expenses": 1120.00,
+      "net": 430.00
+    },
+    {
+      "month": "2024-04",
+      "income": 1550.00,
+      "expenses": 1180.00,
+      "net": 370.00
+    },
+    {
+      "month": "2024-05",
+      "income": 1550.00,
+      "expenses": 1090.00,
+      "net": 460.00
+    },
+    {
+      "month": "2024-06",
+      "income": 1550.00,
+      "expenses": 1120.00,
+      "net": 430.00
     }
   ]
 }

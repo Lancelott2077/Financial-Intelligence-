@@ -20,7 +20,7 @@ export const metadata: Metadata = {
  * TODO: Show loading skeleton while awaiting Gemini response.
  */
 export default function CoachPage({
-  params,
+  params: _params,
 }: {
   params: { sessionId: string };
 }) {

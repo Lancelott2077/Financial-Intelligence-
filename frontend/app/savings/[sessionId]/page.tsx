@@ -19,7 +19,7 @@ export const metadata: Metadata = {
  * TODO: Add "Simulate this change" CTA linking to /simulation.
  */
 export default function SavingsPage({
-  params,
+  params: _params,
 }: {
   params: { sessionId: string };
 }) {

@@ -3,10 +3,6 @@
  *
  * All API requests must go through this client.
  * Handles base URL, default headers, and error normalisation.
- *
- * TODO: Implement request/response interceptors.
- * TODO: Add retry logic for transient failures.
- * TODO: Add request cancellation support (AbortController).
  */
 
 import { API_URL } from "@/lib/constants";
@@ -25,19 +21,43 @@ export class ApiError extends Error {
 
 /**
  * Base fetch wrapper with JSON handling and error normalisation.
- *
- * TODO: Implement full request/response cycle.
- * TODO: Throw ApiError on non-2xx responses.
+ * Throws ApiError on non-2xx responses.
  */
 async function request<T>(
   path: string,
   options?: RequestInit
 ): Promise<T> {
-  // TODO: Construct full URL from API_URL + path.
-  // TODO: Set default headers (Content-Type: application/json).
-  // TODO: Call fetch() and handle response.
-  // TODO: Throw ApiError on non-2xx status.
-  throw new Error(`apiClient.request not implemented. Would call: ${API_URL}${path}`);
+  const url = `${API_URL}${path}`;
+
+  const defaultHeaders: HeadersInit = {};
+  // Don't set Content-Type for FormData — the browser sets the boundary automatically.
+  if (!(options?.body instanceof FormData)) {
+    defaultHeaders["Content-Type"] = "application/json";
+  }
+
+  const response = await fetch(url, {
+    ...options,
+    headers: {
+      ...defaultHeaders,
+      ...options?.headers,
+    },
+  });
+
+  if (!response.ok) {
+    let detail: unknown;
+    try {
+      detail = await response.json();
+    } catch {
+      // Response body may not be JSON.
+    }
+    throw new ApiError(
+      response.status,
+      `API request failed: ${response.status} ${response.statusText}`,
+      detail
+    );
+  }
+
+  return response.json() as Promise<T>;
 }
 
 export const apiClient = {

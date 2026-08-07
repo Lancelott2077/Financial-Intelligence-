@@ -1,25 +1,24 @@
 "use client";
 
 /**
- * hooks/useSnapshot.ts — Financial snapshot data fetching hook.
+ * hooks/useSavings.ts — Savings opportunities data fetching hook.
  *
- * Fetches snapshot data via the service layer and manages loading/error state.
- * Components consume this hook, never calling services directly.
+ * Fetches ranked savings opportunities via the service layer.
  */
 
 import { useState, useEffect, useCallback } from "react";
-import type { SnapshotResponse } from "@/types/api";
-import { fetchSnapshot } from "@/services/financialService";
+import type { SavingsResponse } from "@/types/api";
+import { fetchSavings } from "@/services/financialService";
 
-interface UseSnapshotReturn {
-  data: SnapshotResponse | null;
+interface UseSavingsReturn {
+  data: SavingsResponse | null;
   isLoading: boolean;
   error: string | null;
   refetch: () => void;
 }
 
-export function useSnapshot(sessionId: string | null): UseSnapshotReturn {
-  const [data, setData] = useState<SnapshotResponse | null>(null);
+export function useSavings(sessionId: string | null): UseSavingsReturn {
+  const [data, setData] = useState<SavingsResponse | null>(null);
   const [isLoading, setIsLoading] = useState(false);
   const [error, setError] = useState<string | null>(null);
 
@@ -27,14 +26,14 @@ export function useSnapshot(sessionId: string | null): UseSnapshotReturn {
     setIsLoading(true);
     setError(null);
     try {
-      const result = await fetchSnapshot(id);
+      const result = await fetchSavings(id);
       if (!signal.aborted) {
         setData(result);
       }
     } catch (err) {
       if (!signal.aborted) {
         setError(
-          err instanceof Error ? err.message : "Failed to load snapshot."
+          err instanceof Error ? err.message : "Failed to load savings."
         );
       }
     } finally {
@@ -61,12 +60,4 @@ export function useSnapshot(sessionId: string | null): UseSnapshotReturn {
   }, [sessionId, load]);
 
   return { data, isLoading, error, refetch };
-}
-
-/**
- * Dev-only convenience hook that uses the demo session ID.
- * Useful before the upload flow is implemented.
- */
-export function useMockSnapshot(): UseSnapshotReturn {
-  return useSnapshot("c1f7b7f2-6c84-486a-86a0-53bcaf32cda4");
 }
