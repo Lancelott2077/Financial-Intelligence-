@@ -1,0 +1,50 @@
+{
+  "session_id": "c1f7b7f2-6c84-486a-86a0-53bcaf32cda4",
+  "total_income": 4500.0,
+  "total_expenses": 3200.0,
+  "net_savings": 1300.0,
+  "savings_rate": 28.8,
+  "transaction_count": 84,
+  "date_range_start": "2024-01-01",
+  "date_range_end": "2024-03-31",
+  "category_breakdown": [
+    {
+      "category": "food_and_dining",
+      "total": 800.0,
+      "percentage": 25.0,
+      "transaction_count": 22
+    },
+    {
+      "category": "transport",
+      "total": 400.0,
+      "percentage": 12.5,
+      "transaction_count": 14
+    },
+    {
+      "category": "entertainment",
+      "total": 500.0,
+      "percentage": 15.6,
+      "transaction_count": 8
+    }
+  ],
+  "monthly_trends": [
+    {
+      "month": "2024-01",
+      "income": 1500.0,
+      "expenses": 1000.0,
+      "net": 500.0
+    },
+    {
+      "month": "2024-02",
+      "income": 1500.0,
+      "expenses": 1100.0,
+      "net": 400.0
+    },
+    {
+      "month": "2024-03",
+      "income": 1500.0,
+      "expenses": 1100.0,
+      "net": 400.0
+    }
+  ]
+}

@@ -1,0 +1,26 @@
+{
+  "session_id": "c1f7b7f2-6c84-486a-86a0-53bcaf32cda4",
+  "total_potential_monthly_saving": 250.0,
+  "opportunities": [
+    {
+      "id": 1,
+      "title": "Reduce Dining Out",
+      "category": "food_and_dining",
+      "current_monthly_spend": 800.0,
+      "suggested_monthly_spend": 550.0,
+      "estimated_monthly_saving": 250.0,
+      "difficulty": "medium",
+      "rationale": "Your dining expenses are 25% above average. Cutting down 1-2 restaurant visits per week will easily reach this goal."
+    },
+    {
+      "id": 2,
+      "title": "Cancel Unused Subscriptions",
+      "category": "entertainment",
+      "current_monthly_spend": 120.0,
+      "suggested_monthly_spend": 70.0,
+      "estimated_monthly_saving": 50.0,
+      "difficulty": "low",
+      "rationale": "We detected multiple streaming services. Consolidating to 1 or 2 can save you $50/month."
+    }
+  ]
+}

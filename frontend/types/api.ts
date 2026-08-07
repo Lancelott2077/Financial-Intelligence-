@@ -3,13 +3,38 @@
  *
  * These must mirror the Pydantic schemas defined in backend/app/schemas/.
  * Update both sides whenever the API contract changes.
- *
- * TODO: Generate these types automatically from OpenAPI schema.
  */
 
-// ── Upload ────────────────────────────────────────────────────────────────────
+// ── Shared Enums ──────────────────────────────────────────────────────────────
 
+export type SeverityLevel = "low" | "medium" | "high";
 export type ProcessingStatus = "pending" | "processing" | "completed" | "failed";
+export type PlanItemStatus = "pending" | "in_progress" | "completed" | "skipped";
+export type MessageRole = "user" | "assistant";
+export type TransactionType = "debit" | "credit";
+
+export type BiasType =
+  | "present_bias"
+  | "loss_aversion"
+  | "anchoring"
+  | "mental_accounting"
+  | "status_quo_bias";
+
+export type SpendingCategory =
+  | "food_and_dining"
+  | "groceries"
+  | "transport"
+  | "entertainment"
+  | "utilities"
+  | "healthcare"
+  | "shopping"
+  | "education"
+  | "travel"
+  | "income"
+  | "transfer"
+  | "other";
+
+// ── Upload ────────────────────────────────────────────────────────────────────
 
 export interface UploadResponse {
   session_id: string;
@@ -48,24 +73,31 @@ export interface SnapshotResponse {
 
 // ── Behaviours ────────────────────────────────────────────────────────────────
 
-export type SeverityLevel = "low" | "medium" | "high";
-
 export interface EvidenceItem {
   transaction_id: number;
   date: string;
   description: string;
   amount: number;
+  category: string;
   explanation: string;
 }
 
 export interface BehaviourDetail {
   id: number;
-  bias_type: string;
+  bias_type: BiasType;
   display_name: string;
   confidence: number;
   severity: SeverityLevel;
+  detected: boolean;
   summary: string;
   evidence: EvidenceItem[];
+}
+
+export interface BehaviourProfile {
+  session_id: string;
+  dominant_bias: BiasType | null;
+  all_biases: BehaviourDetail[];
+  overall_risk_level: SeverityLevel;
 }
 
 export interface BehavioursResponse {
@@ -79,7 +111,7 @@ export interface BehavioursResponse {
 export interface SavingOpportunity {
   id: number;
   title: string;
-  category: string;
+  category: SpendingCategory;
   current_monthly_spend: number;
   suggested_monthly_spend: number;
   estimated_monthly_saving: number;
@@ -96,13 +128,13 @@ export interface SavingsResponse {
 // ── Simulation ────────────────────────────────────────────────────────────────
 
 export interface ScenarioChange {
-  category: string;
+  category: SpendingCategory;
   change_percent: number;
 }
 
 export interface SimulationRequest {
   session_id: string;
-  behaviour_id?: number;
+  behaviour_id?: number | null;
   scenario_changes: ScenarioChange[];
   horizon_months: number;
 }
@@ -125,7 +157,7 @@ export interface SimulationResponse {
 // ── Coach ─────────────────────────────────────────────────────────────────────
 
 export interface ChatMessage {
-  role: "user" | "assistant";
+  role: MessageRole;
   content: string;
 }
 
@@ -150,8 +182,9 @@ export interface PlanItem {
   estimated_monthly_saving: number;
   priority: SeverityLevel;
   target_date: string | null;
-  status: "pending" | "in_progress" | "completed" | "skipped";
+  status: PlanItemStatus;
   linked_behaviour_id: number | null;
+  linked_bias_type: BiasType | null;
 }
 
 export interface PlanResponse {

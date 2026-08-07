@@ -4,15 +4,17 @@ from __future__ import annotations
 
 from typing import List
 from pydantic import Field
-from app.schemas.common import BaseResponse
+from app.schemas.common import BaseResponse, SpendingCategory
 
 
 class ScenarioChange(BaseResponse):
     """A single behaviour change to simulate."""
 
-    category: str = Field(description="Spending category to modify.")
+    category: SpendingCategory = Field(description="Spending category to modify.")
     change_percent: float = Field(
-        description="Percentage change (negative = reduction)."
+        ge=-100.0,
+        le=100.0,
+        description="Percentage change (negative = reduction).",
     )
 
 

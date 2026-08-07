@@ -16,6 +16,8 @@ from typing import List
 
 import pandas as pd
 
+from app.schemas.common import BiasType, SeverityLevel
+
 
 @dataclass
 class DetectionResult:
@@ -31,10 +33,10 @@ class DetectionResult:
         evidence_ids    Transaction IDs that constitute evidence.
     """
 
-    bias_type: str
+    bias_type: BiasType
     detected: bool
     confidence: float = 0.0
-    severity: str = "low"
+    severity: SeverityLevel = SeverityLevel.LOW
     summary: str = ""
     evidence_ids: List[int] = field(default_factory=list)
 

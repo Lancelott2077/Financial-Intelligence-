@@ -1,0 +1,52 @@
+{
+  "session_id": "c1f7b7f2-6c84-486a-86a0-53bcaf32cda4",
+  "total_count": 2,
+  "behaviours": [
+    {
+      "id": 101,
+      "bias_type": "present_bias",
+      "display_name": "Present Bias",
+      "confidence": 0.88,
+      "severity": "medium",
+      "detected": true,
+      "summary": "Frequent small impulse purchases affecting long-term saving.",
+      "evidence": [
+        {
+          "transaction_id": 45,
+          "date": "2024-03-12",
+          "description": "Starbucks",
+          "amount": -5.50,
+          "category": "food_and_dining",
+          "explanation": "High frequency coffee purchase."
+        },
+        {
+          "transaction_id": 62,
+          "date": "2024-03-15",
+          "description": "Uber Eats",
+          "amount": -22.00,
+          "category": "food_and_dining",
+          "explanation": "Impulse delivery order."
+        }
+      ]
+    },
+    {
+      "id": 102,
+      "bias_type": "loss_aversion",
+      "display_name": "Loss Aversion",
+      "confidence": 0.92,
+      "severity": "high",
+      "detected": true,
+      "summary": "Holding onto underperforming investments while selling winners too early.",
+      "evidence": [
+        {
+          "transaction_id": 88,
+          "date": "2024-03-20",
+          "description": "Stock Sale - TechCorp",
+          "amount": 150.00,
+          "category": "income",
+          "explanation": "Sold winning stock quickly after a minor gain."
+        }
+      ]
+    }
+  ]
+}

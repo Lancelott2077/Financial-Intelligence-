@@ -1,0 +1,44 @@
+{
+  "session_id": "c1f7b7f2-6c84-486a-86a0-53bcaf32cda4",
+  "scenario_id": "sim-8f92a3",
+  "total_projected_saving": 1500.0,
+  "summary": "Cutting dining out by 30% yields $1500 over 6 months.",
+  "projected_months": [
+    {
+      "month": "2024-04",
+      "projected_income": 1500.0,
+      "projected_expenses": 750.0,
+      "projected_savings": 750.0
+    },
+    {
+      "month": "2024-05",
+      "projected_income": 1500.0,
+      "projected_expenses": 750.0,
+      "projected_savings": 750.0
+    },
+    {
+      "month": "2024-06",
+      "projected_income": 1500.0,
+      "projected_expenses": 750.0,
+      "projected_savings": 750.0
+    },
+    {
+      "month": "2024-07",
+      "projected_income": 1500.0,
+      "projected_expenses": 750.0,
+      "projected_savings": 750.0
+    },
+    {
+      "month": "2024-08",
+      "projected_income": 1500.0,
+      "projected_expenses": 750.0,
+      "projected_savings": 750.0
+    },
+    {
+      "month": "2024-09",
+      "projected_income": 1500.0,
+      "projected_expenses": 750.0,
+      "projected_savings": 750.0
+    }
+  ]
+}

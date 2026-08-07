@@ -1,0 +1,39 @@
+{
+  "session_id": "c1f7b7f2-6c84-486a-86a0-53bcaf32cda4",
+  "total_estimated_monthly_saving": 250.0,
+  "items": [
+    {
+      "id": 12,
+      "title": "Set a weekly coffee limit",
+      "description": "Limit yourself to two coffees out per week. This targets the frequent small impulse purchases associated with Present Bias.",
+      "estimated_monthly_saving": 80.0,
+      "priority": "high",
+      "target_date": "2024-04-15",
+      "status": "pending",
+      "linked_behaviour_id": 101,
+      "linked_bias_type": "present_bias"
+    },
+    {
+      "id": 13,
+      "title": "Consolidate Entertainment Subscriptions",
+      "description": "Review your streaming subscriptions and pause or cancel at least two that you use the least.",
+      "estimated_monthly_saving": 50.0,
+      "priority": "medium",
+      "target_date": "2024-04-20",
+      "status": "in_progress",
+      "linked_behaviour_id": null,
+      "linked_bias_type": null
+    },
+    {
+      "id": 14,
+      "title": "Automate Monthly Savings Transfer",
+      "description": "Set up an automatic transfer of $120 to your savings account on the day you receive your paycheck. This uses the 'pay yourself first' method.",
+      "estimated_monthly_saving": 120.0,
+      "priority": "high",
+      "target_date": "2024-04-10",
+      "status": "completed",
+      "linked_behaviour_id": null,
+      "linked_bias_type": null
+    }
+  ]
+}
