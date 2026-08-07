@@ -19,7 +19,7 @@ export const metadata: Metadata = {
  * TODO: Show total projected saving over 12 months.
  */
 export default function SimulationPage({
-  params,
+  params: _params,
 }: {
   params: { sessionId: string };
 }) {

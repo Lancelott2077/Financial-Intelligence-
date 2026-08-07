@@ -19,7 +19,7 @@ export const metadata: Metadata = {
  * TODO: Implement BiasRadarChart (Recharts radar chart) for bias overview.
  */
 export default function BehaviourReportPage({
-  params,
+  params: _params,
 }: {
   params: { sessionId: string };
 }) {

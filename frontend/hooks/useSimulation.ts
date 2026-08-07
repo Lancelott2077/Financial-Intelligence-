@@ -3,17 +3,19 @@
 /**
  * hooks/useSimulation.ts — Counterfactual simulation hook.
  *
- * TODO: Implement using financialService.runSimulation().
+ * Manages simulation request/response state via the service layer.
  */
 
-import { useState } from "react";
+import { useState, useCallback } from "react";
 import type { SimulationRequest, SimulationResponse } from "@/types/api";
+import { runSimulation } from "@/services/financialService";
 
 interface UseSimulationReturn {
   result: SimulationResponse | null;
   isRunning: boolean;
   error: string | null;
   run: (request: SimulationRequest) => Promise<void>;
+  reset: () => void;
 }
 
 export function useSimulation(): UseSimulationReturn {
@@ -21,12 +23,25 @@ export function useSimulation(): UseSimulationReturn {
   const [isRunning, setIsRunning] = useState(false);
   const [error, setError] = useState<string | null>(null);
 
-  const run = async (_request: SimulationRequest): Promise<void> => {
-    // TODO: Set isRunning to true.
-    // TODO: Call financialService.runSimulation(request).
-    // TODO: Set result and handle errors.
-    throw new Error("useSimulation.run not implemented.");
-  };
+  const run = useCallback(async (request: SimulationRequest): Promise<void> => {
+    setIsRunning(true);
+    setError(null);
+    try {
+      const response = await runSimulation(request);
+      setResult(response);
+    } catch (err) {
+      setError(
+        err instanceof Error ? err.message : "Simulation failed."
+      );
+    } finally {
+      setIsRunning(false);
+    }
+  }, []);
 
-  return { result, isRunning, error, run };
+  const reset = useCallback(() => {
+    setResult(null);
+    setError(null);
+  }, []);
+
+  return { result, isRunning, error, run, reset };
 }

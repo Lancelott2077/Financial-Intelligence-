@@ -4,14 +4,12 @@
  * hooks/useUpload.ts — CSV upload state management hook.
  *
  * Manages file selection, upload progress, and session creation.
- *
- * TODO: Implement upload logic using financialService.uploadStatement().
- * TODO: Poll session status until processing is complete.
- * TODO: Navigate to /snapshot/{session_id} on completion.
+ * On success, returns the session ID for downstream navigation.
  */
 
-import { useState } from "react";
+import { useState, useCallback } from "react";
 import type { SessionState } from "@/types/session";
+import { uploadStatement } from "@/services/financialService";
 
 interface UseUploadReturn {
   state: SessionState;
@@ -26,18 +24,29 @@ export function useUpload(): UseUploadReturn {
     errorMessage: null,
   });
 
-  const upload = async (_file: File): Promise<void> => {
-    // TODO: Set status to 'uploading'.
-    // TODO: Call financialService.uploadStatement(file).
-    // TODO: Set sessionId and status to 'processing'.
-    // TODO: Poll /api/v1/session/{session_id}/status until 'completed'.
-    // TODO: Set status to 'ready' and navigate to snapshot page.
-    throw new Error("useUpload.upload not implemented.");
-  };
+  const upload = useCallback(async (file: File): Promise<void> => {
+    setState({ sessionId: null, status: "uploading", errorMessage: null });
 
-  const reset = (): void => {
+    try {
+      const response = await uploadStatement(file);
+      setState({
+        sessionId: response.session_id,
+        status: "ready",
+        errorMessage: null,
+      });
+    } catch (err) {
+      setState({
+        sessionId: null,
+        status: "error",
+        errorMessage:
+          err instanceof Error ? err.message : "Upload failed. Please try again.",
+      });
+    }
+  }, []);
+
+  const reset = useCallback((): void => {
     setState({ sessionId: null, status: "idle", errorMessage: null });
-  };
+  }, []);
 
   return { state, upload, reset };
 }

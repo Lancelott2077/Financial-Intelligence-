@@ -4,14 +4,12 @@
  * hooks/useCoach.ts — AI financial coach conversation hook.
  *
  * Manages multi-turn conversation state and API calls.
- *
- * TODO: Implement using financialService.chatWithCoach().
- * TODO: Persist conversation history in local state.
- * TODO: Scroll chat window to bottom on new message.
+ * Persists conversation history in local state.
  */
 
-import { useState } from "react";
-import type { ChatMessage, CoachResponse } from "@/types/api";
+import { useState, useCallback } from "react";
+import type { ChatMessage } from "@/types/api";
+import { chatWithCoach } from "@/services/financialService";
 
 interface UseCoachReturn {
   history: ChatMessage[];
@@ -26,19 +24,42 @@ export function useCoach(): UseCoachReturn {
   const [isThinking, setIsThinking] = useState(false);
   const [error, setError] = useState<string | null>(null);
 
-  const send = async (
-    _sessionId: string,
-    _message: string
-  ): Promise<void> => {
-    // TODO: Append user message to history.
-    // TODO: Set isThinking to true.
-    // TODO: Call financialService.chatWithCoach({ session_id, message, history }).
-    // TODO: Append assistant reply to history.
-    // TODO: Handle errors.
-    throw new Error("useCoach.send not implemented.");
-  };
+  const send = useCallback(
+    async (sessionId: string, message: string): Promise<void> => {
+      const userMessage: ChatMessage = { role: "user", content: message };
 
-  const clearHistory = () => setHistory([]);
+      // Optimistically add user message to history.
+      setHistory((prev) => [...prev, userMessage]);
+      setIsThinking(true);
+      setError(null);
+
+      try {
+        const response = await chatWithCoach({
+          session_id: sessionId,
+          message,
+          history: [...history, userMessage],
+        });
+
+        const assistantMessage: ChatMessage = {
+          role: "assistant",
+          content: response.reply,
+        };
+        setHistory((prev) => [...prev, assistantMessage]);
+      } catch (err) {
+        setError(
+          err instanceof Error ? err.message : "Coach is unavailable."
+        );
+      } finally {
+        setIsThinking(false);
+      }
+    },
+    [history]
+  );
+
+  const clearHistory = useCallback(() => {
+    setHistory([]);
+    setError(null);
+  }, []);
 
   return { history, isThinking, error, send, clearHistory };
 }

@@ -19,7 +19,7 @@ export const metadata: Metadata = {
  * TODO: Add "Mark Complete" and "Skip" actions for each item.
  */
 export default function ActionPlanPage({
-  params,
+  params: _params,
 }: {
   params: { sessionId: string };
 }) {
