@@ -66,7 +66,7 @@ class MerchantFeatureExtractor:
         merchant_cat_spend = df_valid.groupby(["category", "merchant"])["abs_amount"].transform("sum")
         
         # Total absolute spend for the entire category across all rows (including null merchants)
-        cat_spend = df_feat["amount"].abs().groupby(df_feat["category"]).transform("sum")
+        cat_spend = df_feat.groupby("category")["amount"].transform(lambda x: x.abs().sum())
         
         # Map category spend strictly to the valid merchant rows using index alignment
         cat_spend_valid = cat_spend[valid_merchant]
