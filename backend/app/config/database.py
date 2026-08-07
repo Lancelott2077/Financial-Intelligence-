@@ -65,5 +65,5 @@ def init_db() -> None:
     TODO: Replace with Alembic migrations for production.
     """
     # Import all models here so Base.metadata knows about them.
-    # from app.models import transaction, session, behaviour, plan  # noqa: F401
+    from app.models import transaction, session, behaviour, plan  # noqa: F401
     Base.metadata.create_all(bind=engine)

@@ -12,14 +12,14 @@ TODO: Handle and log pipeline failures gracefully.
 from __future__ import annotations
 
 from pathlib import Path
+
+import logging
+import pandas as pd
 from sqlalchemy.orm import Session
 
 from app.processing.csv_parser import CSVParser
 from app.processing.normaliser import Normaliser
 from app.processing.categoriser import Categoriser
-
-import pandas as pd
-import logging
 
 logger = logging.getLogger(__name__)
 
@@ -39,28 +39,48 @@ class ProcessingPipeline:
 
         Args:
             session_id: UUID of the UploadSession.
-            file_path:  Path to the raw CSV file on disk.
-            
+            file_path: Path to the raw CSV file on disk.
+
         Returns:
             Fully processed pandas DataFrame.
         """
-        logger.info("Starting processing pipeline for session %s", session_id)
-        
+        logger.info(
+            "Starting processing pipeline for session %s",
+            session_id,
+        )
+
         # 1. Parse CSV
         logger.debug("Parsing CSV file: %s", file_path)
         raw_df = self._parser.parse(file_path)
-        
+
         # 2. Detect Columns
         logger.debug("Detecting standard columns")
         column_map = self._parser.detect_columns(raw_df)
-        
+
         # 3. Normalise Data
         logger.debug("Normalising transaction data")
         norm_df = self._normaliser.normalise(raw_df, column_map)
-        
+
         # 4. Categorise Data
         logger.debug("Categorising transactions")
         cat_df = self._categoriser.categorise(norm_df)
-        
-        logger.info("Pipeline completed successfully for session %s. Processed %d valid transactions.", session_id, len(cat_df))
+
+        # TEMPORARY FEATURE MATRIX TEST
+        from app.features.feature_matrix import FeatureMatrix
+
+        print("=== FEATURE MATRIX TEST START ===")
+
+        feature_matrix = FeatureMatrix()
+        feat_df = feature_matrix.build(cat_df)
+
+        print(f"FeatureMatrix OK. Shape = {feat_df.shape}")
+
+        print("=== FEATURE MATRIX TEST END ===")
+
+        logger.info(
+            "Pipeline completed successfully for session %s. Processed %d valid transactions.",
+            session_id,
+            len(cat_df),
+        )
+
         return cat_df
