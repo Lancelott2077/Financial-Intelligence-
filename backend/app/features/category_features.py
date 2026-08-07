@@ -58,7 +58,7 @@ class CategoryFeatureExtractor:
         mom_drift_unstacked = cat_monthly_unstacked.pct_change(axis=1)
         
         # Stack back to multi-index, ensuring we don't drop NaNs to maintain alignment
-        cat_mom_drift = mom_drift_unstacked.stack(dropna=False)
+        cat_mom_drift = mom_drift_unstacked.stack()
         
         # Replace mathematical inf/-inf (from zero-baseline division) with NaN
         cat_mom_drift = cat_mom_drift.replace([np.inf, -np.inf], np.nan)
