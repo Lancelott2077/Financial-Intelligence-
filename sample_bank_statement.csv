@@ -1,0 +1,77 @@
+Date,Description,Amount,Category
+2024-01-02,Salary Credit,5000.00,income
+2024-01-03,Rent Payment,-1200.00,utilities
+2024-01-04,Starbucks Coffee,-6.50,food_and_dining
+2024-01-05,Uber Eats Delivery,-24.80,food_and_dining
+2024-01-06,Netflix Subscription,-15.99,entertainment
+2024-01-07,Spotify Premium,-9.99,entertainment
+2024-01-08,Walmart Grocery,-87.45,groceries
+2024-01-10,Amazon Purchase,-43.99,shopping
+2024-01-11,Starbucks Coffee,-5.80,food_and_dining
+2024-01-12,Shell Gas Station,-55.20,transport
+2024-01-13,Chipotle,-14.30,food_and_dining
+2024-01-14,H&M Clothing Store,-89.00,shopping
+2024-01-15,Electricity Bill,-78.50,utilities
+2024-01-16,Water & Sewage Bill,-34.00,utilities
+2024-01-17,Uber Ride,-12.40,transport
+2024-01-18,McDonald's,-9.80,food_and_dining
+2024-01-19,Costco Grocery,-120.00,groceries
+2024-01-20,Zara Online,-65.00,shopping
+2024-01-22,Doordash Delivery,-31.50,food_and_dining
+2024-01-23,Gym Membership,-40.00,healthcare
+2024-01-24,CVS Pharmacy,-22.30,healthcare
+2024-01-25,Lyft Ride,-18.60,transport
+2024-01-26,Sushi Restaurant,-72.00,food_and_dining
+2024-01-27,Disney Plus,-13.99,entertainment
+2024-01-28,Amazon Purchase,-28.50,shopping
+2024-01-29,Shell Gas Station,-50.10,transport
+2024-01-30,Apple Store,-199.00,shopping
+2024-02-01,Salary Credit,5000.00,income
+2024-02-02,Rent Payment,-1200.00,utilities
+2024-02-03,Starbucks Coffee,-7.20,food_and_dining
+2024-02-04,Uber Eats Delivery,-27.40,food_and_dining
+2024-02-05,Netflix Subscription,-15.99,entertainment
+2024-02-06,Walmart Grocery,-95.30,groceries
+2024-02-07,Amazon Purchase,-56.00,shopping
+2024-02-08,Chipotle,-15.20,food_and_dining
+2024-02-09,Shell Gas Station,-60.00,transport
+2024-02-10,Target Store,-43.00,shopping
+2024-02-12,Electricity Bill,-82.00,utilities
+2024-02-13,Starbucks Coffee,-6.50,food_and_dining
+2024-02-14,Valentine Dinner Restaurant,-124.00,food_and_dining
+2024-02-15,Uber Ride,-15.00,transport
+2024-02-16,Online Shopping ASOS,-110.00,shopping
+2024-02-18,Doordash Delivery,-35.00,food_and_dining
+2024-02-19,Gym Membership,-40.00,healthcare
+2024-02-20,Costco Grocery,-135.00,groceries
+2024-02-22,Lyft Ride,-22.00,transport
+2024-02-24,Starbucks Coffee,-5.50,food_and_dining
+2024-02-25,IKEA Furniture,-230.00,shopping
+2024-02-26,Shell Gas Station,-48.00,transport
+2024-02-28,Streaming Service HBO,-15.99,entertainment
+2024-03-01,Salary Credit,5000.00,income
+2024-03-02,Rent Payment,-1200.00,utilities
+2024-03-04,Starbucks Coffee,-6.80,food_and_dining
+2024-03-05,Uber Eats Delivery,-29.90,food_and_dining
+2024-03-06,Netflix Subscription,-15.99,entertainment
+2024-03-07,Walmart Grocery,-105.60,groceries
+2024-03-09,Amazon Purchase,-75.00,shopping
+2024-03-10,Chipotle,-16.50,food_and_dining
+2024-03-11,Shell Gas Station,-58.00,transport
+2024-03-12,Starbucks Coffee,-5.50,food_and_dining
+2024-03-13,Barnes and Noble,-34.00,education
+2024-03-14,Electricity Bill,-79.00,utilities
+2024-03-15,Stock Sale TechCorp,150.00,income
+2024-03-16,Zara Online Store,-78.00,shopping
+2024-03-17,Uber Ride,-14.20,transport
+2024-03-18,Doordash Delivery,-38.00,food_and_dining
+2024-03-19,Gym Membership,-40.00,healthcare
+2024-03-20,Starbucks Coffee,-7.00,food_and_dining
+2024-03-21,Lyft Ride,-19.80,transport
+2024-03-22,Online Course Udemy,-29.99,education
+2024-03-23,Costco Grocery,-145.00,groceries
+2024-03-24,Nike Shoes,-120.00,shopping
+2024-03-25,Fine Dining Restaurant,-95.00,food_and_dining
+2024-03-26,Shell Gas Station,-52.00,transport
+2024-03-28,Streaming Apple TV,-8.99,entertainment
+2024-03-30,Amazon Purchase,-44.00,shopping
