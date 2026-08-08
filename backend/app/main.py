@@ -14,7 +14,7 @@ from fastapi import FastAPI
 from fastapi.middleware.cors import CORSMiddleware
 
 from app.config.settings import get_settings
-from app.api import upload
+from app.api import upload, plan
 
 # ---------------------------------------------------------------------------
 # Application factory
@@ -45,19 +45,16 @@ def create_app() -> FastAPI:
     )
 
     # ── Routers ─────────────────────────────────────────────────────────────
-    # TODO: Import and include routers from app.api once implemented.
-    # from app.api import upload, snapshot, behaviours, savings, simulation, coach, plan
     app.include_router(
-    upload.router,
-    prefix="/api/v1/upload",
-    tags=["Upload"],
-)
-    # app.include_router(snapshot.router, prefix="/api/v1/snapshot", tags=["Snapshot"])
-    # app.include_router(behaviours.router, prefix="/api/v1/behaviours", tags=["Behaviours"])
-    # app.include_router(savings.router, prefix="/api/v1/savings", tags=["Savings"])
-    # app.include_router(simulation.router, prefix="/api/v1/simulation", tags=["Simulation"])
-    # app.include_router(coach.router, prefix="/api/v1/coach", tags=["Coach"])
-    # app.include_router(plan.router, prefix="/api/v1/plan", tags=["Plan"])
+        upload.router,
+        prefix="/api/v1/upload",
+        tags=["Upload"],
+    )
+    app.include_router(
+        plan.router,
+        prefix="/api/v1/plan",
+        tags=["Plan"],
+    )
 
     # ── Health check ─────────────────────────────────────────────────────────
     @app.get("/health", tags=["Health"])
