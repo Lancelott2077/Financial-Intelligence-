@@ -1,3 +1,4 @@
+
 """
 Financial Intelligence — FastAPI Application Entry Point.
 
@@ -14,7 +15,9 @@ from fastapi import FastAPI
 from fastapi.middleware.cors import CORSMiddleware
 
 from app.config.settings import get_settings
+from app.config.database import init_db
 from app.api import upload, plan, snapshot, behaviours, savings, simulation, coach
+
 
 # ---------------------------------------------------------------------------
 # Application factory
@@ -34,6 +37,10 @@ def create_app() -> FastAPI:
         docs_url="/docs",
         redoc_url="/redoc",
     )
+
+    # ── Database initialization ───────────────────────────────────────────
+    # Create all ORM tables if they do not already exist.
+    init_db()
 
     # ── CORS ────────────────────────────────────────────────────────────────
     app.add_middleware(
@@ -81,7 +88,7 @@ def create_app() -> FastAPI:
         tags=["Coach"],
     )
 
-    # ── Health check ─────────────────────────────────────────────────────────
+    # ── Health check ───────────────────────────────────────────────────────
     @app.get("/health", tags=["Health"])
     async def health_check() -> dict:
         """Return API health status."""
