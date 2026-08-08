@@ -14,7 +14,7 @@ from fastapi import FastAPI
 from fastapi.middleware.cors import CORSMiddleware
 
 from app.config.settings import get_settings
-from app.api import upload, plan
+from app.api import upload, plan, snapshot, behaviours, savings, simulation, coach
 
 # ---------------------------------------------------------------------------
 # Application factory
@@ -54,6 +54,31 @@ def create_app() -> FastAPI:
         plan.router,
         prefix="/api/v1/plan",
         tags=["Plan"],
+    )
+    app.include_router(
+        snapshot.router,
+        prefix="/api/v1/snapshot",
+        tags=["Snapshot"],
+    )
+    app.include_router(
+        behaviours.router,
+        prefix="/api/v1/behaviours",
+        tags=["Behaviours"],
+    )
+    app.include_router(
+        savings.router,
+        prefix="/api/v1/savings",
+        tags=["Savings"],
+    )
+    app.include_router(
+        simulation.router,
+        prefix="/api/v1/simulation",
+        tags=["Simulation"],
+    )
+    app.include_router(
+        coach.router,
+        prefix="/api/v1/coach",
+        tags=["Coach"],
     )
 
     # ── Health check ─────────────────────────────────────────────────────────

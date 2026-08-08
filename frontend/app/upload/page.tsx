@@ -22,9 +22,19 @@ export default function UploadPage() {
   // Triggered when file and metadata are submitted and validated
   const handleStartUpload = async (file: File, metadata: UploadMetadata) => {
     try {
-      // Save metadata in localStorage keyed by filename temporary, then re-key on success
       localStorage.setItem("fin_temp_upload_meta", JSON.stringify(metadata));
-      await upload(file);
+      const sessionId = await upload(file);
+      if (sessionId) {
+        const savedMetaStr = localStorage.getItem("fin_temp_upload_meta");
+        if (savedMetaStr) {
+          localStorage.setItem(
+            `fin_session_${sessionId}_meta`,
+            savedMetaStr
+          );
+          localStorage.removeItem("fin_temp_upload_meta");
+        }
+        router.push(`/snapshot/${sessionId}`);
+      }
     } catch {
       // Handled by hook state
     }
@@ -53,27 +63,9 @@ export default function UploadPage() {
           return prev;
         });
       }, interval);
-    } else if (state.status === "ready" && state.sessionId) {
+    } else if (state.status === "ready") {
       setProgressVal(100);
       setCurrentStep(4);
-
-      // Save metadata to its final session ID mapping
-      const savedMetaStr = localStorage.getItem("fin_temp_upload_meta");
-      if (savedMetaStr) {
-        localStorage.setItem(`fin_session_${state.sessionId}_meta`, savedMetaStr);
-        localStorage.removeItem("fin_temp_upload_meta");
-      }
-
-      // Navigate to snapshot page
-      const id = state.sessionId;
-      const timeout = setTimeout(() => {
-        router.push(`/snapshot/${id}`);
-      }, 800);
-
-      return () => {
-        clearTimeout(timeout);
-        if (timer) clearInterval(timer);
-      };
     } else if (state.status === "error" || state.status === "idle") {
       setProgressVal(0);
       setCurrentStep(0);

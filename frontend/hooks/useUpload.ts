@@ -13,7 +13,7 @@ import { uploadStatement } from "@/services/financialService";
 
 interface UseUploadReturn {
   state: SessionState;
-  upload: (file: File) => Promise<void>;
+  upload: (file: File) => Promise<string | null>;
   reset: () => void;
 }
 
@@ -24,7 +24,7 @@ export function useUpload(): UseUploadReturn {
     errorMessage: null,
   });
 
-  const upload = useCallback(async (file: File): Promise<void> => {
+  const upload = useCallback(async (file: File): Promise<string | null> => {
     setState({ sessionId: null, status: "uploading", errorMessage: null });
 
     try {
@@ -34,6 +34,7 @@ export function useUpload(): UseUploadReturn {
         status: "ready",
         errorMessage: null,
       });
+      return response.session_id;
     } catch (err) {
       setState({
         sessionId: null,
@@ -41,6 +42,7 @@ export function useUpload(): UseUploadReturn {
         errorMessage:
           err instanceof Error ? err.message : "Upload failed. Please try again.",
       });
+      return null;
     }
   }, []);
 

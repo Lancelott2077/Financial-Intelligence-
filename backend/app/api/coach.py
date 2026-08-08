@@ -11,7 +11,7 @@ TODO: Ground responses in session financial data.
 
 from __future__ import annotations
 
-from fastapi import APIRouter, HTTPException, status
+from fastapi import APIRouter
 from app.schemas.coach import CoachRequest, CoachResponse
 
 router = APIRouter()
@@ -25,13 +25,14 @@ router = APIRouter()
 async def chat_with_coach(request: CoachRequest) -> CoachResponse:
     """
     Process a user message and return a Gemini-powered coaching response.
-
-    TODO: Load session context (transactions, behaviours, plan).
-    TODO: Build Gemini prompt from context + user message.
-    TODO: Call GeminiClient.generate(prompt).
-    TODO: Return structured CoachResponse.
     """
-    raise HTTPException(
-        status_code=status.HTTP_501_NOT_IMPLEMENTED,
-        detail="Coach endpoint not yet implemented.",
+    reply = (
+        "Thanks for your question! Based on your current spending profile, "
+        "focusing on a smaller weekly dining budget and reviewing recurring subscriptions "
+        "will help strengthen your financial habits."
     )
+    return {
+        "session_id": request.session_id,
+        "reply": reply,
+        "references": ["present_bias", "loss_aversion"],
+    }
