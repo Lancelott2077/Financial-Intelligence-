@@ -3,10 +3,6 @@ decisions/rule_engine.py — Core rule evaluation engine.
 
 Evaluates a set of financial rules against detected behaviours
 and snapshot data to produce a prioritised list of recommendations.
-
-TODO: Implement rule evaluation pipeline.
-TODO: Support rule weights and priority scoring.
-TODO: Support rule enable/disable configuration.
 """
 
 from __future__ import annotations
@@ -15,6 +11,10 @@ from dataclasses import dataclass, field
 from typing import List
 
 from app.behaviours.base_detector import DetectionResult
+from app.decisions.rules import RULES
+
+
+_PRIORITY_ORDER = {"high": 0, "medium": 1, "low": 2}
 
 
 @dataclass
@@ -52,14 +52,49 @@ class RuleEngine:
 
         Args:
             detection_results:  Results from DetectorRegistry.run_all().
-            snapshot_data:      Aggregated financial snapshot dict.
+            snapshot_data:      Aggregated financial snapshot dict (may be empty).
 
         Returns:
-            List of Recommendation, sorted by priority and estimated saving.
-
-        TODO: Load rule definitions from rules.py.
-        TODO: For each rule, check trigger condition against detections.
-        TODO: Compute estimated_saving for triggered rules.
-        TODO: Sort by priority score descending.
+            List of Recommendation, sorted by priority then estimated saving.
         """
-        raise NotImplementedError("RuleEngine.evaluate not implemented.")
+        # Build a quick-lookup dict: bias_type_string → DetectionResult
+        detected_map = {
+            r.bias_type.value: r
+            for r in detection_results
+            if r.detected
+        }
+
+        recommendations: List[Recommendation] = []
+
+        for rule in RULES:
+            result = detected_map.get(rule.trigger_bias)
+            if result is None:
+                continue
+            if result.confidence < rule.min_confidence:
+                continue
+
+            saving = 0.0
+            if rule.saving_formula is not None:
+                try:
+                    saving = float(rule.saving_formula(snapshot_data))
+                except Exception:
+                    saving = 0.0
+
+            recommendations.append(
+                Recommendation(
+                    rule_id=rule.rule_id,
+                    title=rule.title,
+                    description=rule.description,
+                    priority=rule.priority,
+                    estimated_saving=round(saving, 2),
+                    linked_behaviour=rule.trigger_bias,
+                )
+            )
+
+        # Sort by priority (high→low) then estimated_saving (desc)
+        recommendations.sort(
+            key=lambda r: (_PRIORITY_ORDER.get(r.priority, 1), -r.estimated_saving)
+        )
+
+        return recommendations
+
