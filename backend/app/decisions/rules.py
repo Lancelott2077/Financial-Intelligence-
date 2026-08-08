@@ -48,7 +48,7 @@ RULES: List[Rule] = [
         title="Introduce a 48-Hour Cooling Period",
         description=(
             "Your data shows impulse spending near payday and on weekends. "
-            "Before any non-essential purchase over ₹500, wait 48 hours. "
+            "Before any non-essential purchase over INR 500, wait 48 hours. "
             "This single habit reduces unplanned spending by 15–25% on average."
         ),
         priority="high",
@@ -62,7 +62,7 @@ RULES: List[Rule] = [
         description=(
             "You treat money in different categories as unrelated pools, leading to "
             "overspending in entertainment and dining while under-spending on savings. "
-            "Set a single monthly discretionary cap of ₹3,000 across all non-essential categories."
+            "Set a single monthly discretionary cap of INR 3,000 across all non-essential categories."
         ),
         priority="medium",
         saving_formula=lambda s: s.get("entertainment_spend", 0) * 0.15,
@@ -74,7 +74,7 @@ RULES: List[Rule] = [
         title="Automate Emergency Fund Transfers",
         description=(
             "Fear of losing money prevents you from moving funds to higher-yield accounts. "
-            "Set up an automatic transfer of ₹1,000 on payday to a separate emergency fund. "
+            "Set up an automatic transfer of INR 1,000 on payday to a separate emergency fund. "
             "Automation removes the emotional friction that loss aversion creates."
         ),
         priority="high",
@@ -88,7 +88,7 @@ RULES: List[Rule] = [
         description=(
             "You anchor to original prices and rarely reassess subscriptions. "
             "Review all recurring charges monthly and cancel any service unused in the last 30 days. "
-            "Users typically save ₹500–₹2,000 per month from this single action."
+            "Users typically save INR 500–2,000 per month from this single action."
         ),
         priority="medium",
         saving_formula=lambda s: s.get("subscription_spend", 0) * 0.30,
