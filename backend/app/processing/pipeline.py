@@ -20,6 +20,7 @@ from sqlalchemy.orm import Session
 from app.processing.csv_parser import CSVParser
 from app.processing.normaliser import Normaliser
 from app.processing.categoriser import Categoriser
+from app.behaviours.detector_registry import DetectorRegistry
 
 logger = logging.getLogger(__name__)
 
@@ -76,6 +77,34 @@ class ProcessingPipeline:
         print(f"FeatureMatrix OK. Shape = {feat_df.shape}")
 
         print("=== FEATURE MATRIX TEST END ===")
+
+        from app.behaviours.detector_registry import DetectorRegistry
+
+        detection_results = DetectorRegistry().run_all(feat_df)
+
+        print(f"DETECTIONS GENERATED: {len(detection_results)}")
+
+        for result in detection_results:
+            print(
+                f"{result.bias_type} detected={result.detected} confidence={result.confidence}"
+            )
+
+        from app.decisions.rule_engine import RuleEngine
+        from app.decisions.decision_builder import DecisionBuilder
+
+        recommendations = RuleEngine().evaluate(
+            detection_results,
+            {}
+        )
+
+        print(f"RECOMMENDATIONS GENERATED: {len(recommendations)}")
+
+        plan_items = await DecisionBuilder(self._db).build_plan(
+            session_id,
+            recommendations,
+        )
+
+        print(f"ACTION PLAN ITEMS GENERATED: {len(plan_items)}")
 
         logger.info(
             "Pipeline completed successfully for session %s. Processed %d valid transactions.",
