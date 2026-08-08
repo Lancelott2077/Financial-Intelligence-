@@ -33,7 +33,7 @@ class SimulationRequest(BaseResponse):
     session_id: str
     behaviour_id: int | None = None
     scenario_changes: List[ScenarioChange] = Field(
-        default_factory=list, min_length=1
+        default_factory=list
     )
     horizon_months: int = Field(default=12, ge=1, le=60)
 
