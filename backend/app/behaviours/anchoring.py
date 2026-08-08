@@ -23,8 +23,34 @@ class AnchoringDetector(BaseBiasDetector):
 
     def detect(self, df: pd.DataFrame) -> DetectionResult:
         """
-        TODO: Detect low variance in spend amounts per merchant.
-        TODO: Detect habitual round-number spending.
-        TODO: Compare anchor amounts to market alternatives.
+        Detect anchoring via low relative amount variance within high-ranked categories.
         """
-        raise NotImplementedError("AnchoringDetector.detect not implemented.")
+        if df.empty:
+            return DetectionResult(self.BIAS_TYPE, False)
+
+        if "amount_zscore_in_category" not in df.columns or "category_rank" not in df.columns:
+            return DetectionResult(self.BIAS_TYPE, False)
+
+        zscore = pd.to_numeric(df["amount_zscore_in_category"], errors="coerce").fillna(0.0)
+        rank = pd.to_numeric(df["category_rank"], errors="coerce").fillna(float("inf"))
+
+        candidates = df.loc[(rank <= 3) & (zscore.abs() <= 1.0)]
+
+        if candidates.empty:
+            return DetectionResult(self.BIAS_TYPE, False)
+
+        confidence = min(1.0, 0.25 + 0.08 * len(candidates))
+        severity = "high" if len(candidates) >= 5 else "medium" if len(candidates) >= 3 else "low"
+        summary = (
+            f"Detected anchoring-like spending: {len(candidates)} transactions are consistently"
+            " clustered near category anchor amounts."
+        )
+
+        return DetectionResult(
+            self.BIAS_TYPE,
+            True,
+            confidence=round(confidence, 2),
+            severity=severity,
+            summary=summary,
+            evidence_ids=[],
+        )

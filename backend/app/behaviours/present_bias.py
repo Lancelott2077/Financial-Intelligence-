@@ -27,11 +27,37 @@ class PresentBiasDetector(BaseBiasDetector):
 
         Signals to look for:
         - High spend in entertainment/dining categories near payday.
-        - Low or zero savings rate.
         - Impulse purchases (high-value, non-essential, weekend transactions).
-
-        TODO: Implement signal computation using feature columns.
-        TODO: Aggregate signals into a confidence score.
-        TODO: Identify top evidence transactions.
         """
-        raise NotImplementedError("PresentBiasDetector.detect not implemented.")
+        if df.empty:
+            return DetectionResult(self.BIAS_TYPE, False)
+
+        if "days_from_payday" not in df.columns or "is_high_value" not in df.columns:
+            return DetectionResult(self.BIAS_TYPE, False)
+
+        days = pd.to_numeric(df["days_from_payday"], errors="coerce").abs().fillna(float("inf"))
+        high_value = df["is_high_value"].astype(bool)
+        near_payday = days <= 3
+        candidates = df.loc[high_value & near_payday]
+
+        if candidates.empty:
+            return DetectionResult(self.BIAS_TYPE, False)
+
+        confidence = min(1.0, 0.35 + 0.08 * len(candidates))
+        if "is_weekend" in candidates.columns and candidates["is_weekend"].astype(bool).any():
+            confidence = min(1.0, confidence + 0.1)
+
+        severity = "high" if confidence >= 0.75 else "medium" if confidence >= 0.5 else "low"
+        summary = (
+            f"Detected high-value spending near payday. "
+            f"{len(candidates)} recent transaction(s) match impulsive spending patterns."
+        )
+
+        return DetectionResult(
+            self.BIAS_TYPE,
+            True,
+            confidence=round(confidence, 2),
+            severity=severity,
+            summary=summary,
+            evidence_ids=[],
+        )

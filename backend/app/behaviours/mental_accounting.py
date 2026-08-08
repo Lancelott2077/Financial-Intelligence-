@@ -22,8 +22,42 @@ class MentalAccountingDetector(BaseBiasDetector):
 
     def detect(self, df: pd.DataFrame) -> DetectionResult:
         """
-        TODO: Detect spending spikes correlated with large income deposits.
-        TODO: Detect disproportionate luxury spend after windfalls.
-        TODO: Identify siloed spending patterns by source.
+        Detect mental accounting patterns through category concentration.
         """
-        raise NotImplementedError("MentalAccountingDetector.detect not implemented.")
+        if df.empty:
+            return DetectionResult(self.BIAS_TYPE, False)
+
+        if "category_monthly_share" not in df.columns:
+            return DetectionResult(self.BIAS_TYPE, False)
+
+        share = pd.to_numeric(df["category_monthly_share"], errors="coerce").fillna(0.0)
+        max_share = float(share.max())
+
+        if max_share < 0.3:
+            return DetectionResult(self.BIAS_TYPE, False)
+
+        top_idx = share.idxmax()
+        top_category = None
+        if "category" in df.columns and top_idx in df.index:
+            top_category = str(df.loc[top_idx, "category"])
+
+        confidence = min(1.0, 0.2 + max_share)
+        severity = "high" if max_share >= 0.5 else "medium"
+        summary = (
+            f"Detected mental accounting patterns with a single category"
+            f" accounting for {max_share:.0%} of monthly spend."
+        )
+        if top_category:
+            summary = summary.replace(
+                "a single category",
+                f"'{top_category}'"
+            )
+
+        return DetectionResult(
+            self.BIAS_TYPE,
+            True,
+            confidence=round(confidence, 2),
+            severity=severity,
+            summary=summary,
+            evidence_ids=[],
+        )
